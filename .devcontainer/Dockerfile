@@ -1,9 +1,8 @@
 FROM python:3.12.0-alpine AS development
 
 # Install system dependencies
-RUN apk add --no-cache gcc musl-dev libffi-dev openssl-dev
-RUN apk update && \ 
-    apk add git
+RUN apk update && apk add --no-cache gcc musl-dev libffi-dev openssl-dev git
+# RUN apk add git
 
 # # Install missing packages
 # RUN pip install pipx
@@ -13,7 +12,7 @@ ENV POETRY_VERSION=1.6.0
 ENV POETRY_HOME="/opt/poetry"
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-# WORKDIR ${PATH}/vdc-fastapi
+WORKDIR /workspaces/vdc-heatmaps
 
 # Install Poetry
 # Use pip for the installation to avoid any virtual environment issues. Do not change to pipx unless a fix is found.
@@ -22,7 +21,7 @@ RUN poetry config virtualenvs.create false
 
 # Set the working directory
 # Copy the application code
-COPY . usr/local/vdc-fastapi
+COPY . /workspaces/vdc-heatmaps
 
 # Create a new project using Poetry
 # RUN poetry new vdc-fastapi
