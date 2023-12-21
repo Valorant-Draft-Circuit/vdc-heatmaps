@@ -11,8 +11,9 @@ RUN apk update && apk add --no-cache gcc musl-dev libffi-dev openssl-dev git
 ENV POETRY_VERSION=1.6.0
 ENV POETRY_HOME="/opt/poetry"
 ENV PATH="$POETRY_HOME/bin:$PATH"
+ENV PYTHONPATH="/vdc_app"
 
-WORKDIR /workspaces/vdc-heatmaps
+# WORKDIR /vdc_heatmap_app
 
 # Install Poetry
 # Use pip for the installation to avoid any virtual environment issues. Do not change to pipx unless a fix is found.
@@ -21,11 +22,12 @@ RUN poetry config virtualenvs.create false
 
 # Set the working directory
 # Copy the application code
-COPY . /workspaces/vdc-heatmaps
+COPY . ./vdc_app
+WORKDIR /vdc_app
 
 # Create a new project using Poetry
 # RUN poetry new vdc-fastapi
- 
+
 
 # Uncomment once the project is being copied from github or the files below are currently present in the local directory.
 # COPY pyproject.toml poetry.lock /vdc-fastapi/
